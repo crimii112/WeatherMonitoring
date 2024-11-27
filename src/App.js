@@ -1,9 +1,11 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Header from 'components/Header';
-import Home from 'pages/Home';
 import GraphByStation from 'pages/GraphByStation';
+import GraphByWeather from 'pages/GraphByWeather';
+import SearchData from 'pages/SearchData';
 import styled from 'styled-components';
+import Home from 'pages/Home';
 
 function App() {
   return (
@@ -17,8 +19,10 @@ function App() {
         <Header />
         <Body>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home />} />/
             <Route path="/page/1" element={<GraphByStation />} />
+            <Route path="/page/2" element={<GraphByWeather />} />
+            <Route path="/page/3" element={<SearchData />} />
           </Routes>
         </Body>
       </BrowserRouter>
@@ -29,7 +33,7 @@ function App() {
 export default App;
 
 const Container = styled.div`
-  width: 1500px;
+  width: 1700px;
   margin: 0 auto;
   padding: 20px;
 `;

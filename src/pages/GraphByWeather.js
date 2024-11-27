@@ -1,53 +1,71 @@
-import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
-import moment from 'moment';
 import useInterval from 'hook/useInterval';
-import Graph1 from 'components/Graph1';
+import moment from 'moment';
+import axios from 'axios';
 import Button from 'components/Button';
 import Loading from 'components/Loading';
+import Graph2 from 'components/Graph2';
+import { items } from 'datas/items';
 import styles from '../css/Graph.module.css';
 import cmmnStyles from '../css/Common.module.css';
 
-function GraphByStation() {
+function GraphByWeather() {
   const [loading, setLoading] = useState(true);
   const [datas, setDatas] = useState([]);
   const [date, setDate] = useState('');
   const [ncol, setNcol] = useState(2);
   const dayRef = useRef(1);
+  const avgRef = useRef('5m');
 
   /* 첫 렌더링 시 */
   useEffect(() => {
     getDatas(getDate());
   }, []);
 
-  /* 10분 간격으로 리렌더링 */
+  /* 5분 간격으로 리렌더링 */
   useInterval(() => {
     console.log('interval call');
     getDatas(getDate());
-  }, 600000);
+  }, 300000);
 
   /* 현재 시간 기준 date 구하기 */
-  const getDate = (selectedDay = 1) => {
+  const getDate = (selectedDay = 1, selectedAvg = '5m') => {
     const currentDate = new Date();
-    currentDate.setMinutes(Math.floor(currentDate.getMinutes() / 10) * 10);
-    const shownEndDate = moment(currentDate).format('YYYY-MM-DD HH:mm:00');
-    currentDate.setMinutes(currentDate.getMinutes() + 10); // 10분 간격 -> 현재 시간 + 10분해야 현재 시간까지 데이터 가져옴
-
     const beforeFewDaysDate = new Date();
-    beforeFewDaysDate.setDate(beforeFewDaysDate.getDate() - selectedDay);
-    beforeFewDaysDate.setMinutes(
-      Math.floor(beforeFewDaysDate.getMinutes() / 10) * 10,
-    );
+    let shownEndDate = '';
+    let startDate = '';
+    let endDate = '';
 
-    const startDate = moment(beforeFewDaysDate).format('YYYY-MM-DD HH:mm:00');
-    const endDate = moment(currentDate).format('YYYY-MM-DD HH:mm:00');
+    if (selectedAvg === '1h') {
+      shownEndDate = moment(currentDate).format('YYYY-MM-DD HH:00');
+      currentDate.setHours(currentDate.getHours() + 1);
+
+      beforeFewDaysDate.setDate(beforeFewDaysDate.getDate() - selectedDay);
+
+      startDate = moment(beforeFewDaysDate).format('YYYY-MM-DD HH:00');
+      endDate = moment(currentDate).format('YYYY-MM-DD HH:00');
+    }
+
+    if (selectedAvg === '5m') {
+      currentDate.setMinutes(Math.floor(currentDate.getMinutes() / 5) * 5);
+      shownEndDate = moment(currentDate).format('YYYY-MM-DD HH:mm:00');
+      currentDate.setMinutes(currentDate.getMinutes() + 5);
+
+      beforeFewDaysDate.setDate(beforeFewDaysDate.getDate() - selectedDay);
+      beforeFewDaysDate.setMinutes(
+        Math.floor(beforeFewDaysDate.getMinutes() / 5) * 5,
+      );
+
+      startDate = moment(beforeFewDaysDate).format('YYYY-MM-DD HH:mm:00');
+      endDate = moment(currentDate).format('YYYY-MM-DD HH:mm:00');
+    }
 
     setDate(`${startDate} ~ ${shownEndDate}`);
     return `${startDate};${endDate}`;
   };
 
   /* API 호출 */
-  const getDatas = async date => {
+  const getDatas = async (date, avg = '5m') => {
     setLoading(true);
     const json = await axios.post(
       'http://192.168.0.20:8098/weatheris/srch/datas.do',
@@ -59,9 +77,9 @@ function GraphByStation() {
     let list = [];
     await json.data.rstList.map(async (station, idx, row) => {
       const body = {
-        page: 'weather/select1',
+        page: 'weather/select2',
         date: `${date}`,
-        minute: '10',
+        avg: `${avg}`,
         type: 'kma',
         nodeid: `${station.nodeId}`,
       };
@@ -91,7 +109,8 @@ function GraphByStation() {
   /* 검색 버튼 클릭 이벤트 */
   const onClickSearch = () => {
     console.log('clicked search button');
-    getDatas(getDate(dayRef.current));
+    console.log(getDate(dayRef.current, avgRef.current));
+    getDatas(getDate(dayRef.current, avgRef.current), avgRef.current);
   };
 
   /* 열 갯수 라디오 버튼 변경 이벤트 */
@@ -119,6 +138,18 @@ function GraphByStation() {
             </option>
             <option value={7} key="7">
               일주일
+            </option>
+          </select>
+          <select
+            id="avg"
+            onChange={e => (avgRef.current = e.target.value)}
+            className={cmmnStyles.selectBox}
+          >
+            <option value="5m" key="5m">
+              5분 평균
+            </option>
+            <option value="1h" key="1h">
+              1시간 평균
             </option>
           </select>
           <Button onClick={onClickSearch}>검색</Button>
@@ -154,13 +185,13 @@ function GraphByStation() {
         <div
           className={`${styles.graphs} ${ncol === 1 ? styles.graphs_ncol_1 : styles.graphs_ncol_2}`}
         >
-          {datas.map(d => {
-            return <Graph1 data={d} key={d.nodeinfo[0].nodeId} ncol={ncol} />;
-          })}
+          {items.map(i => (
+            <Graph2 key={i.value} item={i} data={datas} ncol={ncol} />
+          ))}
         </div>
       )}
     </div>
   );
 }
 
-export default GraphByStation;
+export default GraphByWeather;

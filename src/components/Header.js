@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import styles from '../css/Header.module.css';
 
 function Header() {
@@ -10,16 +10,28 @@ function Header() {
       </h3>
       <ul>
         <li>
-          <Link to="/">홈</Link>
+          <NavLink
+            to="/page/1"
+            className={({ isActive }) => (isActive ? styles.a_active : '')}
+          >
+            측정소별 그래프
+          </NavLink>
         </li>
         <li>
-          <Link to="/page/1">측정소별 그래프</Link>
+          <NavLink
+            to="/page/2"
+            className={({ isActive }) => (isActive ? styles.a_active : '')}
+          >
+            데이터별 그래프
+          </NavLink>
         </li>
         <li>
-          <Link to="/page/2">데이터별 그래프</Link>
-        </li>
-        <li>
-          <Link to="/page/3">기간별 데이터 검색</Link>
+          <NavLink
+            to="/page/3"
+            className={({ isActive }) => (isActive ? styles.a_active : '')}
+          >
+            기간별 데이터 검색
+          </NavLink>
         </li>
       </ul>
     </div>
