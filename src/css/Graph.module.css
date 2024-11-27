@@ -1,0 +1,57 @@
+.graphs {
+  display: grid;
+  grid-gap: 30px;
+  width: 100%;
+  margin-top: 30px;
+}
+
+.graphs_ncol_1 {
+  grid-template-columns: repeat(1, minmax(400px, 1fr));
+}
+
+.graphs_ncol_2 {
+  grid-template-columns: repeat(2, minmax(400px, 1fr));
+}
+
+.graph {
+  width: 100%;
+  background-color: white;
+  font-weight: 300;
+  padding: 10px 0px;
+  border-radius: 5px;
+  color: inherit;
+  box-shadow: 3px 3px 5px -3px rgba(50, 50, 93, 0.25);
+  border: 1px solid #f1f1f1;
+}
+
+.graph_flag {
+  width: 100%;
+  background-color: rgba(255, 0, 0, 0.7);
+  font-weight: 300;
+  padding: 10px 0px;
+  border-radius: 5px;
+  color: inherit;
+  box-shadow: 3px 3px 5px -3px rgba(50, 50, 93, 0.25);
+  border: 1px solid #f1f1f1;
+}
+
+.graph_title {
+  margin: 0 10px;
+  padding: 5px;
+  text-align: center;
+  background-color: #f1f1f1;
+}
+.graph_title_flag {
+  margin: 0 10px;
+  padding: 5px;
+  text-align: center;
+  background-color: rgba(255, 0, 0, 0);
+}
+
+.timezone {
+  display: flex;
+}
+.timezone h5 {
+  margin: 10px 15px;
+  font-size: 16px;
+}

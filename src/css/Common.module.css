@@ -1,0 +1,78 @@
+.basicDiv {
+  border: 1px solid #f1f1f1;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.flexDiv {
+  display: flex;
+  border: 1px solid #f1f1f1;
+  border-radius: 5px;
+  padding: 10px;
+  justify-content: space-between;
+}
+
+.flexNonBorderDiv {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+
+.searchDiv {
+  display: flex;
+}
+
+.searchDateDiv {
+  display: flex;
+  margin-top: 5px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.selectBox {
+  padding: 10px;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  margin-right: 5px;
+  box-sizing: border-box;
+}
+
+.selectBox:focus {
+  border: 1px solid grey;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.radioDiv {
+  margin: 10px;
+}
+
+.inputDate {
+  width: auto;
+  padding: 10px;
+  margin-right: 5px;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.text_center {
+  text-align: center;
+}
+
+.styled_btn {
+  padding: 10px;
+  border-radius: 5px;
+  border: 0;
+  background-color: #246beb;
+  color: #fff;
+  &:hover {
+    background-color: #246beb;
+    box-shadow: 0 0 5px #246beb;
+  }
+}
+
+.csv_a {
+  color: white;
+}
