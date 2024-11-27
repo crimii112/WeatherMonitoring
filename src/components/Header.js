@@ -1,0 +1,41 @@
+import React from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import styles from '../css/Header.module.css';
+
+function Header() {
+  return (
+    <div className={styles.header}>
+      <h3>
+        <Link to="/">기상수집 모니터링</Link>
+      </h3>
+      <ul>
+        <li>
+          <NavLink
+            to="/page/1"
+            className={({ isActive }) => (isActive ? styles.a_active : '')}
+          >
+            측정소별 그래프
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/page/2"
+            className={({ isActive }) => (isActive ? styles.a_active : '')}
+          >
+            데이터별 그래프
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/page/3"
+            className={({ isActive }) => (isActive ? styles.a_active : '')}
+          >
+            기간별 데이터 검색
+          </NavLink>
+        </li>
+      </ul>
+    </div>
+  );
+}
+
+export default Header;
