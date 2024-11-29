@@ -15,7 +15,7 @@ export default Loading;
 
 const SpinnerWrapper = styled.div`
   width: 100%;
-  height: 650px;
+  height: 850px;
   display: flex;
   align-items: center;
   justify-content: center;
