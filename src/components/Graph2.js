@@ -25,7 +25,7 @@ function Graph2({ item, data, ncol }) {
   }, [item, data]);
 
   const formatXAxis = tickFormat => {
-    return moment(tickFormat).format('YY-MM-DD HH:mm');
+    return moment(tickFormat).format('MM-DD HH:mm');
   };
   const formatWsAxis = tickFormat => {
     return parseFloat(tickFormat).toFixed(1);
@@ -39,7 +39,7 @@ function Graph2({ item, data, ncol }) {
       </h3>
       <div>
         <ComposedChart
-          width={ncol === 2 ? 750 : 1600}
+          width={ncol === 2 ? 900 : 1800}
           height={300}
           data={data}
           margin={{ top: 10, bottom: 20, left: 20, right: 0 }}

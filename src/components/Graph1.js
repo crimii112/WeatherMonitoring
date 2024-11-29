@@ -14,10 +14,7 @@ function Graph1({ data, ncol }) {
   }, [data.flagList]);
 
   const formatXAxis = tickFormat => {
-    const date = moment(tickFormat).format('YY-MM-DD');
-    const time = moment(tickFormat).format('HH:mm');
-    const res = `${date} ${time}`;
-    return res;
+    return moment(tickFormat).format('MM-DD HH:mm');
   };
 
   const formatWsAxis = tickFormat => {
@@ -34,10 +31,10 @@ function Graph1({ data, ncol }) {
       </h3>
       <div>
         <ComposedChart
-          width={ncol === 2 ? 750 : 1600}
-          height={300}
+          width={ncol === 2 ? 900 : 1800}
+          height={310}
           data={data.rstList}
-          margin={{ top: 10, bottom: 20, left: 20, right: -8 }}
+          margin={{ top: 10, bottom: 20, left: 20, right: -5 }}
         >
           <Legend
             verticalAlign="top"

@@ -33,11 +33,10 @@ function App() {
 export default App;
 
 const Container = styled.div`
-  width: 1700px;
-  margin: 0 auto;
-  padding: 20px;
+  width: 100%;
+  margin: 0;
 `;
 
 const Body = styled.div`
-  padding: 20px;
+  padding: 10px;
 `;

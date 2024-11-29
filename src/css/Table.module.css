@@ -6,13 +6,13 @@
 
 .tbody {
   display: block;
-  max-height: 578px;
+  max-height: 640px;
   overflow-y: scroll;
   overflow-x: hidden;
 }
 
 .tr {
-  width: 99.95%;
+  width: 99.8%;
   display: table;
   table-layout: fixed;
 }
