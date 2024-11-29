@@ -31,7 +31,7 @@ function Graph1({ data, ncol }) {
       </h3>
       <div>
         <ComposedChart
-          width={ncol === 2 ? 900 : 1800}
+          width={ncol === 2 ? 900 : 1850}
           height={390}
           data={data.rstList}
           margin={{ top: 10, bottom: 20, left: 20, right: -5 }}
