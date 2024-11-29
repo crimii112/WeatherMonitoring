@@ -40,7 +40,7 @@ function Graph2({ item, data, ncol }) {
       <div>
         <ComposedChart
           width={ncol === 2 ? 900 : 1800}
-          height={300}
+          height={390}
           data={data}
           margin={{ top: 10, bottom: 20, left: 20, right: 0 }}
         >
