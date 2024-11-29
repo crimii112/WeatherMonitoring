@@ -16,7 +16,7 @@ function Graph1({ data, ncol }) {
   const formatXAxis = tickFormat => {
     const date = moment(tickFormat).format('YY-MM-DD');
     const time = moment(tickFormat).format('HH:mm');
-    const res = date + ' ' + time;
+    const res = `${date} ${time}`;
     return res;
   };
 
