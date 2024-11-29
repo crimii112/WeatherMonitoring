@@ -49,7 +49,7 @@ function GraphByStation() {
 
   /* API 호출 */
   const getDatas = async date => {
-    console.log('Data loading ...');
+    console.log(`(${moment().format('HH:mm:ss')}) Data loading ...`);
     setLoading(true);
     const json = await axios.post(`${API_URL}`, {
       page: 'weather/nodeid',

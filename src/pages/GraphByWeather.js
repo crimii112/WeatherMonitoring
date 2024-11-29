@@ -67,7 +67,7 @@ function GraphByWeather() {
 
   /* API 호출 */
   const getDatas = async (date, avg = '5m') => {
-    console.log('Data loading ...');
+    console.log(`(${moment().format('HH:mm:ss')}) Data loading ...`);
     setLoading(true);
     const json = await axios.post(`${API_URL}`, {
       page: 'weather/nodeid',
