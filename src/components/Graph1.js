@@ -16,7 +16,7 @@ function Graph1({ data, ncol }) {
   const formatXAxis = tickFormat => {
     const date = moment(tickFormat).format('YY-MM-DD');
     const time = moment(tickFormat).format('HH:mm');
-    const res = date + ' ' + time;
+    const res = `${date} ${time}`;
     return res;
   };
 
@@ -96,7 +96,7 @@ function Graph1({ data, ncol }) {
               value: '온도(℃)',
               angle: -90,
               position: 'insideRight',
-              offset: 25,
+              offset: 20,
               fontSize: '12px',
               fontWeight: 'bold',
             }}

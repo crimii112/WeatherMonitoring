@@ -1,7 +1,43 @@
 import React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Header from 'components/Header';
+import GraphByStation from 'pages/GraphByStation';
+import GraphByWeather from 'pages/GraphByWeather';
+import SearchData from 'pages/SearchData';
+import styled from 'styled-components';
+import Home from 'pages/Home';
 
 function App() {
-  return <div>기상수집 모니터링</div>;
+  return (
+    <Container>
+      <BrowserRouter
+        future={{
+          v7_relativeSplatPath: true,
+          v7_startTransition: true,
+        }}
+      >
+        <Header />
+        <Body>
+          <Routes>
+            <Route path="/" element={<Home />} />/
+            <Route path="/page/1" element={<GraphByStation />} />
+            <Route path="/page/2" element={<GraphByWeather />} />
+            <Route path="/page/3" element={<SearchData />} />
+          </Routes>
+        </Body>
+      </BrowserRouter>
+    </Container>
+  );
 }
 
 export default App;
+
+const Container = styled.div`
+  width: 1700px;
+  margin: 0 auto;
+  padding: 20px;
+`;
+
+const Body = styled.div`
+  padding: 20px;
+`;

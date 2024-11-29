@@ -5,6 +5,7 @@ import axios from 'axios';
 import Button from 'components/Button';
 import Loading from 'components/Loading';
 import Graph2 from 'components/Graph2';
+import { API_URL } from 'config';
 import { items } from 'datas/items';
 import styles from '../css/Graph.module.css';
 import cmmnStyles from '../css/Common.module.css';
@@ -66,41 +67,33 @@ function GraphByWeather() {
 
   /* API 호출 */
   const getDatas = async (date, avg = '5m') => {
+    console.log(`(${moment().format('HH:mm:ss')}) Data loading ...`);
     setLoading(true);
-    const json = await axios.post(
-      'http://192.168.0.20:8098/weatheris/srch/datas.do',
-      {
-        page: 'weather/nodeid',
-      },
-    );
+    const json = await axios.post(`${API_URL}`, {
+      page: 'weather/nodeid',
+    });
 
     let list = [];
     await json.data.rstList.map(async (station, idx, row) => {
-      const body = {
+      const getDataBody = {
         page: 'weather/select2',
         date: `${date}`,
         avg: `${avg}`,
         type: 'kma',
         nodeid: `${station.nodeId}`,
       };
-      const json = await axios.post(
-        'http://192.168.0.20:8098/weatheris/srch/datas.do',
-        body,
-      );
-      const body2 = {
+      const getDataRes = await axios.post(`${API_URL}`, getDataBody);
+
+      const getFlagBody = {
         page: 'weather/chk',
         minute: '180',
         type: 'kma',
         nodeid: `${station.nodeId}`,
       };
-      const json2 = await axios.post(
-        'http://192.168.0.20:8098/weatheris/srch/datas.do',
-        body2,
-      );
-      json.data.flagList = json2.data.rstList;
-      console.log(json.data);
-      list = [...list, json.data];
-      console.log(list);
+      const getFlagRes = await axios.post(`${API_URL}`, getFlagBody);
+
+      getDataRes.data.flagList = getFlagRes.data.rstList;
+      list = [...list, getDataRes.data];
       list.length === row.length && setDatas(list);
       list.length === row.length && setLoading(false);
     });

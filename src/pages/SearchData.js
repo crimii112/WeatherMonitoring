@@ -5,6 +5,7 @@ import { CSVLink } from 'react-csv';
 import Button from 'components/Button';
 import Table from 'components/Table';
 import Loading from 'components/Loading';
+import { API_URL } from 'config';
 import { times } from 'datas/times';
 import cmmnStyles from '../css/Common.module.css';
 
@@ -12,7 +13,6 @@ function SearchData() {
   const [loading, setLoading] = useState(false);
   const [stationList, setStationList] = useState([]);
   const [date, setDate] = useState({});
-  const [csvBody, setCsvBody] = useState({});
   const [csvData, setCsvData] = useState([]);
   const [datas, setDatas] = useState([]);
 
@@ -22,12 +22,9 @@ function SearchData() {
   }, []);
 
   const getStationList = async () => {
-    const json = await axios.post(
-      'http://192.168.0.20:8098/weatheris/srch/datas.do',
-      {
-        page: 'weather/nodeid',
-      },
-    );
+    const json = await axios.post(`${API_URL}`, {
+      page: 'weather/nodeid',
+    });
     setStationList(json.data.rstList);
   };
 
@@ -53,10 +50,7 @@ function SearchData() {
 
   const getData = async body => {
     setLoading(true);
-    const json = await axios.post(
-      'http://192.168.0.20:8098/weatheris/srch/datas.do',
-      body,
-    );
+    const json = await axios.post(`${API_URL}`, body);
     setDatas(json.data);
     setLoading(false);
   };
@@ -75,8 +69,6 @@ function SearchData() {
       nodeid: `${e.target.nodeid.value}`,
     };
     getData(body);
-    // body.page = 'datarls/csv';
-    // setCsvBody(body);
   };
 
   const exportYN = () => {
