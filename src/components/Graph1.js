@@ -96,7 +96,7 @@ function Graph1({ data, ncol }) {
               value: '온도(℃)',
               angle: -90,
               position: 'insideRight',
-              offset: 25,
+              offset: 20,
               fontSize: '12px',
               fontWeight: 'bold',
             }}
