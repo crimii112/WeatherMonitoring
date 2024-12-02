@@ -1,4 +1,5 @@
 export const items = [
+  { name: '풍향', unit: '(°)', value: 'wd', domain: [0, 360], tickCount: 10 },
   {
     name: '풍속',
     unit: '(m/s)',
@@ -6,7 +7,6 @@ export const items = [
     domain: ['auto', 'auto'],
     tickCount: 10,
   },
-  { name: '풍향', unit: '(°)', value: 'wd', domain: [0, 360], tickCount: 10 },
   {
     name: '온도',
     unit: '(℃)',
