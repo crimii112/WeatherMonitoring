@@ -24,10 +24,13 @@ function GraphByWeather() {
   }, []);
 
   /* 5분 간격으로 리렌더링 */
-  useInterval(() => {
-    console.log('interval call');
-    getDatas(getDate());
-  }, 300000);
+  useInterval(
+    () => {
+      console.log('interval call');
+      getDatas(getDate());
+    },
+    avgRef.current === '5m' ? 300000 : 36000000,
+  );
 
   /* 현재 시간 기준 date 구하기 */
   const getDate = (selectedDay = 1, selectedAvg = '5m') => {

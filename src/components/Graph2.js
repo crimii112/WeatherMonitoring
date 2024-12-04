@@ -4,6 +4,7 @@ import {
   ComposedChart,
   Legend,
   Line,
+  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
@@ -11,6 +12,7 @@ import {
 import moment from 'moment';
 import { colors } from 'datas/colors';
 import styles from '../css/Graph.module.css';
+import styled from 'styled-components';
 
 function Graph2({ item, data, ncol }) {
   const [flag, setFlag] = useState(0);
@@ -37,64 +39,68 @@ function Graph2({ item, data, ncol }) {
         {item.name}
         {item.unit}
       </h3>
-      <div>
-        <ComposedChart
-          width={ncol === 2 ? 900 : 1850}
-          height={390}
-          data={data}
-          margin={{ top: 10, bottom: 20, left: 20, right: 0 }}
-        >
-          <XAxis
-            dataKey="dt"
-            allowDuplicatedCategory={false}
-            tickFormatter={formatXAxis}
-            label={{
-              value: '측정일시',
-              position: 'bottom',
-              fontSize: '13px',
-              fontWeight: 'bold',
-            }}
-            fontSize={12}
-            padding={{ left: 10, right: 10 }}
-          />
-          <Legend
-            verticalAlign="top"
-            wrapperStyle={{ paddingBottom: '10px' }}
-          />
-          <Tooltip />
-          <CartesianGrid strokeDasharray="3" vertical={false} />
-          <YAxis
-            yAxisId="left"
-            type="number"
-            domain={item.domain}
-            tickCount={item.tickCount}
-            fontSize={12}
-            label={{
-              value: `${item.name}${item.unit}`,
-              angle: -90,
-              position: 'insideLeft',
-              offset: 15,
-              fontSize: '12px',
-              fontWeight: 'bold',
-            }}
-            tickFormatter={
-              (item.value === 'ws' || item.value === 'tmp') && formatWsAxis
-            }
-          />
-          {data.map((d, idx) => (
-            <Line
-              data={d.rstList}
-              key={idx}
-              yAxisId="left"
-              dataKey={item.value}
-              name={d.nodeinfo[0].nodeNm}
-              stroke={colors[idx]}
+      <GraphDiv>
+        <ResponsiveContainer width="100%" height={390}>
+          <ComposedChart
+            data={data}
+            margin={{ top: 10, bottom: 20, left: 10, right: 20 }}
+          >
+            <XAxis
+              dataKey="dt"
+              allowDuplicatedCategory={false}
+              tickFormatter={formatXAxis}
+              label={{
+                value: '측정일시',
+                position: 'bottom',
+                fontSize: '13px',
+                fontWeight: 'bold',
+              }}
+              fontSize={12}
+              padding={{ left: 10, right: 10 }}
             />
-          ))}
-        </ComposedChart>
-      </div>
+            <Legend
+              verticalAlign="top"
+              wrapperStyle={{ paddingBottom: '10px' }}
+            />
+            <Tooltip />
+            <CartesianGrid strokeDasharray="3" vertical={false} />
+            <YAxis
+              yAxisId="left"
+              type="number"
+              domain={item.domain}
+              tickCount={item.tickCount}
+              fontSize={12}
+              label={{
+                value: `${item.name}${item.unit}`,
+                angle: -90,
+                position: 'insideLeft',
+                offset: 15,
+                fontSize: '12px',
+                fontWeight: 'bold',
+              }}
+              tickFormatter={
+                (item.value === 'ws' || item.value === 'tmp') && formatWsAxis
+              }
+            />
+            {data.map((d, idx) => (
+              <Line
+                data={d.rstList}
+                key={idx}
+                yAxisId="left"
+                dataKey={item.value}
+                name={d.nodeinfo[0].nodeNm}
+                stroke={colors[idx]}
+              />
+            ))}
+          </ComposedChart>
+        </ResponsiveContainer>
+      </GraphDiv>
     </div>
   );
 }
 
 export default Graph2;
+
+const GraphDiv = styled.div`
+  width: 100%;
+`;
