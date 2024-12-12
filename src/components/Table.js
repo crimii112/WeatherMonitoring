@@ -2,7 +2,7 @@ import React from 'react';
 import styles from '../css/Table.module.css';
 import cmmnStyles from '../css/Common.module.css';
 
-function Table({ data }) {
+const Table = ({ data }) => {
   return (
     <div className={cmmnStyles.basicDiv}>
       {data.length === 0 ? (
@@ -39,6 +39,6 @@ function Table({ data }) {
       )}
     </div>
   );
-}
+};
 
 export default Table;

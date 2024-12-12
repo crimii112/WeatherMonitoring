@@ -2,14 +2,14 @@ import React from 'react';
 import { DotLoader } from 'react-spinners';
 import styled from 'styled-components';
 
-function Loading() {
+const Loading = () => {
   return (
     <SpinnerWrapper>
       <DotLoader />
       <h3>Loading...</h3>
     </SpinnerWrapper>
   );
-}
+};
 
 export default Loading;
 

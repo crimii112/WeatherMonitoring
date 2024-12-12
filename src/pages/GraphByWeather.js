@@ -2,15 +2,15 @@ import React, { useEffect, useRef, useState } from 'react';
 import useInterval from 'hook/useInterval';
 import moment from 'moment';
 import axios from 'axios';
+import GraphW from 'components/GraphW';
 import Button from 'components/Button';
 import Loading from 'components/Loading';
-import Graph2 from 'components/Graph2';
-import { API_URL } from 'config';
 import { items } from 'datas/items';
 import styles from '../css/Graph.module.css';
 import cmmnStyles from '../css/Common.module.css';
 
 function GraphByWeather() {
+  const apiUrl = `${process.env.REACT_APP_SERVER_URL}/weatheris/srch/datas.do`;
   const [loading, setLoading] = useState(true);
   const [datas, setDatas] = useState([]);
   const [date, setDate] = useState('');
@@ -27,9 +27,10 @@ function GraphByWeather() {
   useInterval(
     () => {
       console.log('interval call');
-      getDatas(getDate());
+      getDatas(getDate(dayRef.current, avgRef.current), avgRef.current);
     },
-    avgRef.current === '5m' ? 300000 : 36000000,
+    avgRef.current === '5m' ? 300000 : 3600000,
+    //avgRef.current === '5m' ? 30000 : 3600000,
   );
 
   /* 현재 시간 기준 date 구하기 */
@@ -72,7 +73,7 @@ function GraphByWeather() {
   const getDatas = async (date, avg = '5m') => {
     console.log(`(${moment().format('HH:mm:ss')}) Data loading ...`);
     setLoading(true);
-    const json = await axios.post(`${API_URL}`, {
+    const json = await axios.post(apiUrl, {
       page: 'weather/nodeid',
     });
 
@@ -85,7 +86,7 @@ function GraphByWeather() {
         type: 'kma',
         nodeid: `${station.nodeId}`,
       };
-      const getDataRes = await axios.post(`${API_URL}`, getDataBody);
+      const getDataRes = await axios.post(apiUrl, getDataBody);
 
       const getFlagBody = {
         page: 'weather/chk',
@@ -93,7 +94,7 @@ function GraphByWeather() {
         type: 'kma',
         nodeid: `${station.nodeId}`,
       };
-      const getFlagRes = await axios.post(`${API_URL}`, getFlagBody);
+      const getFlagRes = await axios.post(apiUrl, getFlagBody);
 
       getDataRes.data.flagList = getFlagRes.data.rstList;
       list = [...list, getDataRes.data];
@@ -182,7 +183,7 @@ function GraphByWeather() {
           className={`${styles.graphs} ${ncol === 1 ? styles.graphs_ncol_1 : styles.graphs_ncol_2}`}
         >
           {items.map(i => (
-            <Graph2 key={i.value} item={i} data={datas} ncol={ncol} />
+            <GraphW key={i.value} item={i} data={datas} />
           ))}
         </div>
       )}

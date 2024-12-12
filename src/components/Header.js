@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import styles from '../css/Header.module.css';
 
-function Header() {
+const Header = () => {
   return (
     <div className={styles.header}>
       <h3>
@@ -33,9 +33,25 @@ function Header() {
             기간별 데이터 검색
           </NavLink>
         </li>
+        <li>
+          <NavLink
+            to="/page/4"
+            className={({ isActive }) => (isActive ? styles.a_active : '')}
+          >
+            GIS
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/page/5"
+            className={({ isActive }) => (isActive ? styles.a_active : '')}
+          >
+            측정소별 그래프(GIS)
+          </NavLink>
+        </li>
       </ul>
     </div>
   );
-}
+};
 
 export default Header;

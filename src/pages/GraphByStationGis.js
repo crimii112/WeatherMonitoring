@@ -1,19 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
-import useInterval from 'hook/useInterval';
 import axios from 'axios';
 import moment from 'moment';
-import GraphS from 'components/GraphS';
+import useInterval from 'hook/useInterval';
 import Button from 'components/Button';
 import Loading from 'components/Loading';
 import styles from '../css/Graph.module.css';
 import cmmnStyles from '../css/Common.module.css';
+import GraphSG from 'components/GraphSG';
 
-function GraphByStation() {
+function GraphByStationGis() {
   const apiUrl = `${process.env.REACT_APP_SERVER_URL}/weatheris/srch/datas.do`;
   const [loading, setLoading] = useState(true);
   const [datas, setDatas] = useState([]);
   const [date, setDate] = useState('');
-  const [ncol, setNcol] = useState(2);
   const dayRef = useRef(1);
 
   /* 첫 렌더링 시 */
@@ -87,11 +86,6 @@ function GraphByStation() {
     getDatas(getDate(dayRef.current));
   };
 
-  /* 열 갯수 라디오 버튼 변경 이벤트 */
-  const onChangeNcolRadio = e => {
-    setNcol(Number(e.target.value));
-  };
-
   return (
     <div>
       <div className={cmmnStyles.flexDiv}>
@@ -119,36 +113,14 @@ function GraphByStation() {
         <div className={styles.timezone}>
           <h5>{date}</h5>
         </div>
-        <div className={cmmnStyles.radioDiv}>
-          <label>
-            <input
-              type="radio"
-              value="1"
-              name="ncol"
-              onChange={onChangeNcolRadio}
-            />
-            1개씩 보기
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="2"
-              name="ncol"
-              onChange={onChangeNcolRadio}
-              defaultChecked
-            />
-            2개씩 보기
-          </label>
-        </div>
+        <div style={{ width: '180px' }} />
       </div>
       {loading ? (
         <Loading />
       ) : (
-        <div
-          className={`${styles.graphs} ${ncol === 1 ? styles.graphs_ncol_1 : styles.graphs_ncol_2}`}
-        >
+        <div className={`${styles.graphs}`}>
           {datas.map(d => {
-            return <GraphS data={d} key={d.nodeinfo[0].nodeId} />;
+            return <GraphSG data={d} key={d.nodeinfo[0].nodeId} />;
           })}
         </div>
       )}
@@ -156,4 +128,4 @@ function GraphByStation() {
   );
 }
 
-export default GraphByStation;
+export default GraphByStationGis;

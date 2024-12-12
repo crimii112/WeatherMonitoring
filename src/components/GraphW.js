@@ -10,11 +10,11 @@ import {
   YAxis,
 } from 'recharts';
 import moment from 'moment';
+import styled from 'styled-components';
 import { colors } from 'datas/colors';
 import styles from '../css/Graph.module.css';
-import styled from 'styled-components';
 
-function Graph2({ item, data, ncol }) {
+const GraphW = ({ item, data }) => {
   const [flag, setFlag] = useState(0);
 
   useEffect(() => {
@@ -97,9 +97,9 @@ function Graph2({ item, data, ncol }) {
       </GraphDiv>
     </div>
   );
-}
+};
 
-export default Graph2;
+export default GraphW;
 
 const GraphDiv = styled.div`
   width: 100%;

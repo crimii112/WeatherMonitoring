@@ -5,11 +5,11 @@ import { CSVLink } from 'react-csv';
 import Button from 'components/Button';
 import Table from 'components/Table';
 import Loading from 'components/Loading';
-import { API_URL } from 'config';
 import { times } from 'datas/times';
 import cmmnStyles from '../css/Common.module.css';
 
 function SearchData() {
+  const apiUrl = `${process.env.REACT_APP_SERVER_URL}/weatheris/srch/datas.do`;
   const [loading, setLoading] = useState(false);
   const [stationList, setStationList] = useState([]);
   const [date, setDate] = useState({});
@@ -22,7 +22,7 @@ function SearchData() {
   }, []);
 
   const getStationList = async () => {
-    const json = await axios.post(`${API_URL}`, {
+    const json = await axios.post(apiUrl, {
       page: 'weather/nodeid',
     });
     setStationList(json.data.rstList);
@@ -50,7 +50,7 @@ function SearchData() {
 
   const getData = async body => {
     setLoading(true);
-    const json = await axios.post(`${API_URL}`, body);
+    const json = await axios.post(apiUrl, body);
     setDatas(json.data);
     setLoading(false);
   };
