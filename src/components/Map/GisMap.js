@@ -60,9 +60,12 @@ function GisMap({ id, data }) {
     map
       .getView()
       .setCenter(fromLonLat([data[0].lon, data[0].lat], get('EPSG:4326')));
+
+    /* zoomLevel 설정 */
+    map.getView().setZoom(19);
+
     addMarkerLayer(map);
     addOverlay(map);
-    map.getView().setZoom(10);
   }, [map, data, addMarkerLayer]);
 
   return <MapDiv id={id} />;

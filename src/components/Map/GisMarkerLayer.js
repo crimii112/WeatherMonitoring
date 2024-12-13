@@ -16,7 +16,6 @@ const getFeature = (overlayInfo, lon, lat) => {
 
 export const getMarkerLayer = coordInfo => {
   let features = [];
-  console.log(coordInfo);
   coordInfo.forEach(c => {
     features.push(getFeature(c, c.lon, c.lat));
   });
@@ -29,8 +28,8 @@ export const getMarkerLayer = coordInfo => {
       image: new Icon({
         src: '/assets/images/marker.png',
         anchor: [0.5, 0.6],
-        width: 20,
-        height: 20,
+        width: 30,
+        height: 30,
       }),
     }),
   });

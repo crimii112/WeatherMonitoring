@@ -2,7 +2,10 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Map as OlMap, View } from 'ol';
 import { fromLonLat, get } from 'ol/proj';
 import { defaults as defaultControls } from 'ol/control';
-import { defaults as defaultInteractions } from 'ol/interaction';
+import {
+  DblClickDragZoom,
+  defaults as defaultInteractions,
+} from 'ol/interaction';
 import { Tile } from 'ol/layer';
 import { XYZ } from 'ol/source';
 import Button from 'ol-ext/control/Button';
@@ -51,10 +54,7 @@ const MapProvider = ({ id, defaultMode = 'Satellite', children }) => {
 
     const map = new OlMap({
       controls: defaultControls({ zoom: false, rotate: false }).extend([]),
-      interactions: defaultInteractions({
-        dragPan: true,
-        mouseWheelZoom: true,
-      }),
+      interactions: defaultInteractions().extend([new DblClickDragZoom()]),
       layers: [
         new Tile({
           name: 'Base',
@@ -75,12 +75,13 @@ const MapProvider = ({ id, defaultMode = 'Satellite', children }) => {
         projection: get('EPSG:4326'),
         center: center,
         zoom: zoomLevel,
-        maxZoom: 18,
-        minZoom: 6,
+        maxZoom: 20,
+        minZoom: 7,
       }),
       target: id,
     });
 
+    /* 기본 Map 모드 설정 */
     map
       .getLayers()
       .getArray()
@@ -115,6 +116,7 @@ const MapDiv = styled.div`
     border: 1px solid lightgrey;
     background-color: rgba(255, 255, 255, 0.8);
     cursor: pointer;
+    font-family: 'NanumBarunGothic', sans-serif;
   }
   .ol-button.ol-control {
     width: fit-content;

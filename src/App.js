@@ -29,7 +29,7 @@ function App() {
             <Route
               path="/page/4"
               element={
-                <MapProvider id="gis">
+                <MapProvider id="gis" defaultMode="Base">
                   <StationGIS />
                 </MapProvider>
               }
