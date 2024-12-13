@@ -14,7 +14,6 @@ import MapContext from 'components/Map/MapContext';
 import { getMarkerLayer } from 'components/Map/GisMarkerLayer';
 import cmmnStyles from '../css/Common.module.css';
 import { fromLonLat, get } from 'ol/proj';
-import Button from 'components/Button';
 
 function StationGIS() {
   const apiUrl = `${process.env.REACT_APP_SERVER_URL}/weatheris/srch/datas.do`;
