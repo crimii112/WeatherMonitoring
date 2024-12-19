@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import useInterval from 'hook/useInterval';
 import axios from 'axios';
 import moment from 'moment';
 import GraphS from 'components/GraphS';
@@ -7,6 +6,7 @@ import Button from 'components/Button';
 import Loading from 'components/Loading';
 import styles from '../css/Graph.module.css';
 import cmmnStyles from '../css/Common.module.css';
+import Timer from 'components/Timer';
 
 function GraphByStation() {
   const apiUrl = `${process.env.REACT_APP_SERVER_URL}/weatheris/srch/datas.do`;
@@ -14,18 +14,26 @@ function GraphByStation() {
   const [datas, setDatas] = useState([]);
   const [date, setDate] = useState('');
   const [ncol, setNcol] = useState(2);
+  const [defaultSeconds, setdefaultSeconds] = useState(600);
+  const [clickedTime, setClickedTime] = useState(moment());
   const dayRef = useRef(1);
 
-  /* 첫 렌더링 시 */
-  useEffect(() => {
-    getDatas(getDate());
-  }, []);
+  const worker = new Worker(
+    new URL('../worker/timerWorker.js', import.meta.url),
+  );
 
-  /* 10분 간격으로 리렌더링 */
-  useInterval(() => {
-    console.log('interval call');
+  useEffect(() => {
     getDatas(getDate(dayRef.current));
-  }, 600000);
+    worker.postMessage(600000);
+
+    return () => worker.terminate();
+  }, [defaultSeconds, clickedTime]);
+
+  worker.onmessage = event => {
+    console.log(event.data);
+    setdefaultSeconds(600);
+    setClickedTime(moment());
+  };
 
   /* 현재 시간 기준 date 구하기 */
   const getDate = (selectedDay = 1) => {
@@ -84,7 +92,9 @@ function GraphByStation() {
   /* 검색 버튼 클릭 이벤트 */
   const onClickSearch = () => {
     console.log('clicked search button');
-    getDatas(getDate(dayRef.current));
+    setdefaultSeconds(600);
+    setClickedTime(moment());
+    //getDatas(getDate(dayRef.current));
   };
 
   /* 열 갯수 라디오 버튼 변경 이벤트 */
@@ -115,6 +125,7 @@ function GraphByStation() {
             </option>
           </select>
           <Button onClick={onClickSearch}>검색</Button>
+          <Timer defaultSeconds={defaultSeconds} clickedTime={clickedTime} />
         </div>
         <div className={styles.timezone}>
           <h5>{date}</h5>

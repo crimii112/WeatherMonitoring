@@ -149,7 +149,7 @@ export default StationGIS;
 
 const MapDiv = styled.div`
   width: 100%;
-  height: 795px;
+  height: 840px;
   position: relative;
 
   #select-box {

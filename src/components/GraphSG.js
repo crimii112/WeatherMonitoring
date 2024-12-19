@@ -19,7 +19,6 @@ const GraphSG = ({ data }) => {
   const [flag, setFlag] = useState(0);
 
   useEffect(() => {
-    console.log(data.nodeinfo);
     const flagIs1 = data.flagList.filter(e => {
       return e.flag === 1;
     });

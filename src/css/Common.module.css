@@ -20,6 +20,10 @@
 
 .searchDiv {
   display: flex;
+  align-items: center;
+}
+.searchDiv span {
+  margin: 5px;
 }
 
 .searchDateDiv {
