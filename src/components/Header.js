@@ -13,7 +13,6 @@ const Header = () => {
           <NavLink
             to="/"
             className={({ isActive }) => (isActive ? styles.a_active : '')}
-            isActive
           >
             측정소별 그래프
           </NavLink>

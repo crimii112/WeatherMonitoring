@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 onmessage = event => {
-  console.log(event.data);
+  // console.log(event.data);
   //const start = moment();
 
   // setInterval(() => {
