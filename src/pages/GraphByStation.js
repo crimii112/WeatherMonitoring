@@ -30,7 +30,7 @@ function GraphByStation() {
   }, [defaultSeconds, clickedTime]);
 
   worker.onmessage = event => {
-    console.log(event.data);
+    // console.log(event.data);
     setdefaultSeconds(600);
     setClickedTime(moment());
   };
@@ -57,7 +57,7 @@ function GraphByStation() {
 
   /* API 호출 */
   const getDatas = async date => {
-    console.log(`(${moment().format('HH:mm:ss')}) Data loading ...`);
+    // console.log(`(${moment().format('HH:mm:ss')}) Data loading ...`);
     setLoading(true);
     const json = await axios.post(apiUrl, {
       page: 'weather/nodeid',
@@ -91,7 +91,7 @@ function GraphByStation() {
 
   /* 검색 버튼 클릭 이벤트 */
   const onClickSearch = () => {
-    console.log('clicked search button');
+    // console.log('clicked search button');
     setdefaultSeconds(600);
     setClickedTime(moment());
     //getDatas(getDate(dayRef.current));

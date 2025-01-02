@@ -11,8 +11,9 @@ const Header = () => {
       <ul>
         <li>
           <NavLink
-            to="/page/1"
+            to="/"
             className={({ isActive }) => (isActive ? styles.a_active : '')}
+            isActive
           >
             측정소별 그래프
           </NavLink>

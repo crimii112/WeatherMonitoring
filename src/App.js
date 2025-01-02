@@ -22,8 +22,8 @@ function App() {
         <Header />
         <Body>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/page/1" element={<GraphByStation />} />
+            {/* <Route path="/" element={<GraphByStation />} /> */}
+            <Route path="/" element={<GraphByStation />} />
             <Route path="/page/2" element={<GraphByWeather />} />
             <Route path="/page/3" element={<SearchData />} />
             <Route

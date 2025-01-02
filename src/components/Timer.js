@@ -3,29 +3,47 @@ import moment from 'moment';
 import { useEffect, useState } from 'react';
 
 const Timer = ({ defaultSeconds, clickedTime }) => {
-  const [time, setTime] = useState(defaultSeconds);
+  const [time, setTime] = useState(null);
+  const [closedTime, setClosedTime] = useState();
 
   useEffect(() => {
-    setTime(defaultSeconds);
-  }, [defaultSeconds]);
+    if (defaultSeconds === 300) {
+      const temp = clickedTime.set({
+        minute:
+          clickedTime.minute() % 5 === 0
+            ? clickedTime.minute() + 5
+            : Math.ceil(clickedTime.minute() / 5) * 5,
+        second: 0,
+        millisecond: 0,
+      });
+      // console.log(moment(temp));
+      setClosedTime(moment(temp));
+    } else if (defaultSeconds === 600) {
+      const temp = clickedTime.set({
+        minute:
+          clickedTime.minute() % 10 === 0
+            ? clickedTime.minute() + 10
+            : Math.ceil(clickedTime.minute() / 10) * 10,
+        second: 0,
+        millisecond: 0,
+      });
+      // console.log(moment(temp));
+      setClosedTime(moment(temp));
+    } else if (defaultSeconds === 3600) {
+      const temp = clickedTime
+        .add(1, 'hours')
+        .set({ minute: 0, second: 0, millisecond: 0 });
+      // console.log(moment(temp));
+      setClosedTime(moment(temp));
+    }
+  }, [defaultSeconds, clickedTime]);
 
   useInterval(() => {
-    if (time <= 0) setTime(defaultSeconds);
-
+    if (time <= 0) setTime(null);
     const currentTime = moment();
-    const diff = moment.duration(currentTime.diff(clickedTime)).asSeconds();
-    /*console.log(
-      clickedTime.format('YY-MM-DD HH:mm:ss') +
-        ' : ' +
-        currentTime.format('YY-MM-DD HH:mm:ss'),
-    );
-    console.log(
-      Math.floor(diff).toString() +
-        ' : ' +
-        (defaultSeconds - Math.floor(diff)).toString(),
-    );*/
+    const diff = moment.duration(closedTime.diff(currentTime)).asSeconds();
 
-    setTime(defaultSeconds - Math.floor(diff));
+    setTime(Math.floor(diff));
   }, 1000);
 
   const minutes = Math.floor(time / 60)

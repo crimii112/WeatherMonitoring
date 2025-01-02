@@ -72,7 +72,7 @@ function SearchData() {
   };
 
   const exportYN = () => {
-    console.log('clicked save button');
+    // console.log('clicked save button');
     if (datas.length === 0) {
       alert(
         '저장할 데이터가 존재하지 않습니다.\n검색 후에 저장을 진행해주세요.',
