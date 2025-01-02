@@ -15,10 +15,10 @@ function GraphByWeather() {
   const [datas, setDatas] = useState([]);
   const [date, setDate] = useState('');
   const [ncol, setNcol] = useState(2);
-  const [defaultSeconds, setdefaultSeconds] = useState(300);
+  const [defaultSeconds, setdefaultSeconds] = useState(3600);
   const [clickedTime, setClickedTime] = useState(moment());
-  const dayRef = useRef(1);
-  const avgRef = useRef('5m');
+  const dayRef = useRef(2);
+  const avgRef = useRef('1h');
 
   const worker = new Worker(
     new URL('../worker/timerWorker.js', import.meta.url),
@@ -38,7 +38,7 @@ function GraphByWeather() {
   };
 
   /* 현재 시간 기준 date 구하기 */
-  const getDate = (selectedDay = 1, selectedAvg = '5m') => {
+  const getDate = (selectedDay = 2, selectedAvg = '1h') => {
     const currentDate = new Date();
     const beforeFewDaysDate = new Date();
     let shownEndDate = '';
@@ -128,6 +128,7 @@ function GraphByWeather() {
             id="day"
             onChange={e => (dayRef.current = e.target.value)}
             className={cmmnStyles.selectBox}
+            defaultValue={2}
           >
             <option value={1} key="1">
               1일
@@ -146,6 +147,7 @@ function GraphByWeather() {
             id="avg"
             onChange={e => (avgRef.current = e.target.value)}
             className={cmmnStyles.selectBox}
+            defaultValue="1h"
           >
             <option value="5m" key="5m">
               5분 평균
