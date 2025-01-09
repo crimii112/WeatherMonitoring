@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ComposedChart,
   Legend,
@@ -10,70 +10,18 @@ import {
 } from 'recharts';
 import moment from 'moment';
 import styled from 'styled-components';
-import { Overlay } from 'ol';
-import MapContext from './Map/MapContext';
-import { getMarkerLayer } from './Map/GisMarkerLayer';
 import styles from '../css/Graph.module.css';
 import cmmnStyles from '../css/Common.module.css';
 
 const GraphS = ({ data }) => {
   const [flag, setFlag] = useState(0);
-  const map = useContext(MapContext);
-
-  /* 마커 추가 */
-  const addMarkerLayer = useCallback(
-    map => {
-      const markerLayer = getMarkerLayer(data.nodeinfo);
-      map.addLayer(markerLayer);
-    },
-    [data],
-  );
-
-  /* 오버레이 추가 */
-  const addOverlay = map => {
-    let selected = null;
-    const style =
-      'position:relative; padding: 10px; color: #FFF; border-radius: 5px; background-color: #000; font-size: 12px;';
-    map.on('pointermove', function (e) {
-      if (selected !== null) {
-        map.getOverlays().forEach(ol => map.removeOverlay(ol));
-        selected = null;
-      }
-
-      map.forEachFeatureAtPixel(e.pixel, function (f) {
-        selected = f;
-        const info = selected.get('overlayInfo');
-        if (info !== undefined) {
-          let container = document.createElement('div');
-          container.style.cssText = style;
-          const content = '측정소명 : ' + info.nodeNm;
-          container.innerText = content;
-          const overlay = new Overlay({
-            element: container,
-            position: [info.lon, info.lat],
-            positioning: 'bottom-center',
-          });
-
-          map.addOverlay(overlay);
-        }
-
-        return true;
-      });
-    });
-  };
 
   useEffect(() => {
-    if (!map.ol_uid) {
-      return;
-    }
-    addMarkerLayer(map);
-    addOverlay(map);
-
     const flagIs1 = data.flagList.filter(e => {
       return e.flag === 1;
     });
     if (flagIs1.length > 0) setFlag(1);
-  }, [map, data.flagList, addMarkerLayer]);
+  }, [data.flagList]);
 
   /* x축(측정일시) 포맷 */
   const formatXAxis = tickFormat => {

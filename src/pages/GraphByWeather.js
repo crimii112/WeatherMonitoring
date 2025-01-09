@@ -28,6 +28,7 @@ function GraphByWeather() {
     getDatas(getDate(dayRef.current, avgRef.current), avgRef.current);
     worker.postMessage(avgRef.current === '5m' ? 300000 : 3600000);
 
+    console.log(datas);
     return () => worker.terminate();
   }, [defaultSeconds, clickedTime]);
 
@@ -75,7 +76,7 @@ function GraphByWeather() {
 
   /* API 호출 */
   const getDatas = async (date, avg = '5m') => {
-    // console.log(`(${moment().format('HH:mm:ss')}) Data loading ...`);
+    console.log(`(${moment().format('HH:mm:ss')}) Data loading ...`);
     setLoading(true);
     const json = await axios.post(apiUrl, {
       page: 'weather/nodeid',
