@@ -68,6 +68,7 @@ function SearchData() {
       type: 'kma',
       nodeid: `${e.target.nodeid.value}`,
     };
+    console.log(body);
     getData(body);
   };
 
