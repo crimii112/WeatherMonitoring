@@ -128,11 +128,12 @@ function SearchData() {
               />
               <select
                 name="startTime"
-                value={date.time}
                 className={cmmnStyles.selectBox}
+                defaultValue={date.time}
+                key={date.time}
               >
-                {times.map(time => (
-                  <option key={time} value={time}>
+                {times.map((time, idx) => (
+                  <option key={idx} value={time}>
                     {time}
                   </option>
                 ))}
@@ -146,11 +147,12 @@ function SearchData() {
               />
               <select
                 name="endTime"
-                value={date.time}
                 className={cmmnStyles.selectBox}
+                defaultValue={date.time}
+                key={date.time}
               >
-                {times.map(time => (
-                  <option key={time} value={time}>
+                {times.map((time, idx) => (
+                  <option key={idx} value={time}>
                     {time}
                   </option>
                 ))}
